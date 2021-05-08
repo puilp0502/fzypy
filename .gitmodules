@@ -1,0 +1,3 @@
+[submodule "fzy/fzy"]
+	path = fzy/fzy
+	url = https://github.com/jhawthorn/fzy
