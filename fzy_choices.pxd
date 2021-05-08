@@ -1,6 +1,7 @@
 from fzy_options cimport options_t
 
 cdef extern from "fzy/src/choices.h":
+    ctypedef double score_t
     cdef struct scored_result:
         pass
     ctypedef struct choices_t:
@@ -11,5 +12,6 @@ cdef extern from "fzy/src/choices.h":
     size_t choices_available(choices_t *c)
     void choices_search(choices_t *c, const char *search)
     const char *choices_get(choices_t *c, size_t n)
+    score_t choices_getscore(choices_t *c, size_t n)
     void choices_prev(choices_t *c)
     void choices_next(choices_t *c)
