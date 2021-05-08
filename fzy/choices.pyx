@@ -1,9 +1,9 @@
 # distutils: sources = fzy/fzy/src/choices.c fzy/fzy/src/options.c fzy/fzy/src/match.c
 # distutils: include_dirs = fzy/fzy/src/
 
-from libc.stdlib cimport malloc
 cimport fzy_choices
 cimport fzy_options
+
 
 cdef class Choice:
     cdef fzy_choices.choices_t _choices_t
