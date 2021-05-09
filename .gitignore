@@ -1,5 +1,5 @@
 *.so
 build/
-src/*.c
+src/fzy/*.c
 __pycache__
 
