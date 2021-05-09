@@ -38,6 +38,9 @@ cdef class Choice:
         return results
 
     def add(self, choice):
+        """Add entry `choice` to the list of candidates.
+        :param choice: candidate string to add
+        """
         if not isinstance(choice, str):
             raise TypeError("expected str, got {}".format(type(choice)))
         encoded = choice.encode("utf-8")
@@ -45,6 +48,10 @@ cdef class Choice:
         self._add(encoded)
 
     def search(self, search):
+        """Search for query `search` from the candidates.
+        The candidates should have been added beforehand via .add() method.
+        :param search: search query
+        :return: list of (candidate, score) tuple"""
         if not isinstance(search, str):
             raise TypeError("expected str, got {}".format(type(search)))
         self._search(search.encode("utf-8"))
