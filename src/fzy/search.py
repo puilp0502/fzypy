@@ -7,10 +7,10 @@ users are encouraged to used fzy.choices module directly.
 from fzy import choices
 
 
-def search(candidates, search):
+def search(search, candidates):
     """Fuzzy search from provided `candidates` with query `search`.
-    :param candidates: list (or iterable) of candidate strings
     :param search: search query
+    :param candidates: list (or iterable) of candidate strings
     :return: list of (candidate, score) tuples
     """
     choicer = choices.Choice()
