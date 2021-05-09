@@ -5,6 +5,7 @@ import os.path
 import shutil
 from Cython.Build import cythonize
 
+
 VERSION = "0.0.1"
 FZY_VERSION = "1.0"  # TODO Parse from Makefile?
 
@@ -47,9 +48,25 @@ class build_ext(_build_ext):
         super().run()
 
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+
 setup(
-    name="fzy",
-    version="{}+{}".format(VERSION, FZY_VERSION),
+    name="fzypy",
+    version=VERSION,
+    author="Frank Yang",
+    author_email="puilp0502@gmail.com",
+    description="A fuzzy finder in Python based on fzy",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/puilp0502/fzypy",
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: POSIX",
+        "Programming Language :: Python :: 3",
+    ],
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     cmdclass={
