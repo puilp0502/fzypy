@@ -1,5 +1,5 @@
-# distutils: sources = fzy/fzy/src/choices.c fzy/fzy/src/options.c fzy/fzy/src/match.c
-# distutils: include_dirs = fzy/fzy/src/
+# distutils: sources = fzy/src/choices.c fzy/src/options.c fzy/src/match.c
+# distutils: include_dirs = fzy/src/
 
 cimport fzy_choices
 cimport fzy_options

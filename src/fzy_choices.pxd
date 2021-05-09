@@ -1,7 +1,7 @@
 from fzy_match cimport score_t
 from fzy_options cimport options_t
 
-cdef extern from "fzy/src/choices.h":
+cdef extern from "choices.h":
     cdef struct scored_result:
         pass
     ctypedef struct choices_t:

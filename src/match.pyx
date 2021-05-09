@@ -1,5 +1,5 @@
-# distutils: sources = fzy/fzy/src/match.c
-# distutils: include_dirs = fzy/fzy/src/
+# distutils: sources = fzy/src/match.c
+# distutils: include_dirs = fzy/src/
 
 cimport fzy_match
 import math

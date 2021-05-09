@@ -1,4 +1,5 @@
 *.so
 build/
+src/*.c
 __pycache__
 

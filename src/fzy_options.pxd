@@ -1,4 +1,4 @@
-cdef extern from "fzy/src/options.h":
+cdef extern from "options.h":
     ctypedef struct options_t:
         int benchmark
         const char *filter
