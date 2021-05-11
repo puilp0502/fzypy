@@ -6,7 +6,7 @@ import shutil
 from Cython.Build import cythonize
 
 
-VERSION = "0.0.1"
+VERSION = "0.0.2-a1"
 FZY_VERSION = "1.0"  # TODO Parse from Makefile?
 
 include_path = ["src/fzy/"]
