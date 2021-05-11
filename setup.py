@@ -73,4 +73,5 @@ setup(
         "build_ext": build_ext,
     },
     ext_modules=cythonize(extensions, include_path=include_path),
+    python_requires=">=3.5",
 )
