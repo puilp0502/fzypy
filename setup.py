@@ -6,7 +6,12 @@ import shutil
 from Cython.Build import cythonize
 
 
-VERSION = "0.0.2-a1"
+about = {}
+with open("src/fzy/__about__.py", "r") as f:
+    exec(f.read(), about)
+
+
+VERSION = about["__version__"]
 FZY_VERSION = "1.0"  # TODO Parse from Makefile?
 
 include_path = ["src/fzy/"]
@@ -15,11 +20,13 @@ extensions = [
         "fzy.choices",
         ["src/fzy/choices.pyx"],
         define_macros=[("VERSION", '"{}"'.format(FZY_VERSION))],
+        extra_compile_args=["-std=c99"],
     ),
     Extension(
         "fzy.match",
         ["src/fzy/match.pyx"],
         define_macros=[("VERSION", '"{}"'.format(FZY_VERSION))],
+        extra_compile_args=["-std=c99"],
     ),
 ]
 

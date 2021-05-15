@@ -1,0 +1,101 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PY_VER: 3.6
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PY_VER }}
+      - name: Install test-time dependencies
+        run: |
+          pip install tox
+      - name: Run test
+        run: |
+          tox -e python${{ env.PY_VER }}
+      - name: Test Git tag matches package version
+        run: |
+          TAG=$(echo ${{ github.ref }} | sed 's|refs/tags/v||')
+          VERSION=$(python src/fzy/__about__.py)
+          echo TAG: $TAG
+          echo VERSION: $VERSION
+          [[ "$TAG" == "$VERSION" ]]
+
+  build-sdist:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Install build-time dependencies
+        run: |
+          pip install build
+      - name: Build sdist
+        run: |
+          python -m build -s
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*.tar.gz
+
+  build-manylinux:
+    runs-on: ubuntu-latest
+    needs: test
+    strategy:
+      matrix:
+        image:
+          - manylinux1_x86_64
+          - manylinux2010_x86_64
+          - manylinux2014_x86_64
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Pull manylinux docker image
+        run: |
+          docker pull quay.io/pypa/${{ matrix.image }}
+      - name: Build manylinux wheel
+        run: |
+          docker run -v $(pwd):/io -e PLAT=${{ matrix.image }} quay.io/pypa/${{ matrix.image }} /io/.github/wfscripts/manylinux.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*manylinux*.whl
+
+  build-macos:
+    runs-on: macos-latest
+    needs: test
+    strategy:
+      matrix:
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install build-time dependencies
+        run: |
+          pip install build
+      - name: Install build-time dependencies
+        run: |
+          python -m build -w
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*macos*.whl
